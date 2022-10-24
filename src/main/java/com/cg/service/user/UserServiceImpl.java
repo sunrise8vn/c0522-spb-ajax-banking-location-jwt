@@ -2,7 +2,7 @@ package com.cg.service.user;
 
 import com.cg.model.User;
 import com.cg.model.UserPrinciple;
-import com.cg.model.dto.UserDTO;
+import com.cg.model.dto.UserRegisterDTO;
 import com.cg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<UserDTO> findUserDTOByUsername(String username) {
+    public Optional<UserRegisterDTO> findUserDTOByUsername(String username) {
         return userRepository.findUserDTOByUsername(username);
     }
 

@@ -7,6 +7,7 @@ import com.cg.model.Transfer;
 import com.cg.model.dto.DepositDTO;
 import com.cg.service.customer.ICustomerService;
 import com.cg.service.deposit.IDepositService;
+import com.cg.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,9 @@ public class CustomerController {
     @Autowired
     private IDepositService depositService;
 
+    @Autowired
+    private AppUtil appUtil;
+
     @GetMapping
     public ModelAndView showListPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -36,6 +40,10 @@ public class CustomerController {
         List<Customer> customers = customerService.findAll();
 
         modelAndView.addObject("customers", customers);
+
+        String username = appUtil.getPrincipalUsername();
+
+        modelAndView.addObject("username", username);
 
         return modelAndView;
     }

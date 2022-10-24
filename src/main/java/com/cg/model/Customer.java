@@ -74,7 +74,8 @@ public class Customer extends BaseEntity {
                 .setFullName(fullName)
                 .setEmail(email)
                 .setPhone(phone)
-                .setBalance(balance.toString());
+                .setBalance(balance.toString())
+                .setLocationRegion(locationRegion.toLocationRegionDTO());
     }
 
     public CustomerDTO toCustomerDTO() {
@@ -83,7 +84,8 @@ public class Customer extends BaseEntity {
                 .setFullName(fullName)
                 .setEmail(email)
                 .setPhone(phone)
-                .setBalance(balance);
+                .setBalance(balance)
+                .setLocationRegion(locationRegion.toLocationRegionDTO());
     }
 
     public RecipientDTO toRecipientDTO() {

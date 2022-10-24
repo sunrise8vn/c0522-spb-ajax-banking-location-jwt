@@ -1,7 +1,7 @@
 package com.cg.service.user;
 
 import com.cg.model.User;
-import com.cg.model.dto.UserDTO;
+import com.cg.model.dto.UserRegisterDTO;
 import com.cg.service.IGeneralService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -12,7 +12,7 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
 
     Optional<User> findByUsername(String username);
 
-    Optional<UserDTO> findUserDTOByUsername(String username);
+    Optional<UserRegisterDTO> findUserDTOByUsername(String username);
 
     Boolean existsByUsername(String email);
 }

@@ -5,7 +5,8 @@ import com.cg.exception.EmailExistsException;
 import com.cg.model.JwtResponse;
 import com.cg.model.Role;
 import com.cg.model.User;
-import com.cg.model.dto.UserDTO;
+import com.cg.model.dto.UserLoginDTO;
+import com.cg.model.dto.UserRegisterDTO;
 import com.cg.service.jwt.JwtService;
 import com.cg.service.role.IRoleService;
 import com.cg.service.user.IUserService;
@@ -50,25 +51,25 @@ public class AuthAPI {
     private AppUtil appUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDTO userRegisterDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
             return appUtil.mapErrorToResponse(bindingResult);
 
-        Boolean existsByUsername = userService.existsByUsername(userDTO.getUsername());
+        Boolean existsByUsername = userService.existsByUsername(userRegisterDTO.getUsername());
 
         if (existsByUsername) {
             throw new EmailExistsException("Account already exists");
         }
 
-        Optional<Role> optRole = roleService.findById(userDTO.getRole().getId());
+        Optional<Role> optRole = roleService.findById(userRegisterDTO.getRole().getId());
 
         if (!optRole.isPresent()) {
             throw new DataInputException("Invalid account role");
         }
 
         try {
-            userService.save(userDTO.toUser());
+            userService.save(userRegisterDTO.toUser());
 
             return new ResponseEntity<>(HttpStatus.CREATED);
 
@@ -78,16 +79,16 @@ public class AuthAPI {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword()));
+                    new UsernamePasswordAuthenticationToken(userLoginDTO.getUsername(), userLoginDTO.getPassword()));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String jwt = jwtService.generateTokenLogin(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User currentUser = userService.getByUsername(userDTO.getUsername());
+            User currentUser = userService.getByUsername(userLoginDTO.getUsername());
 
             JwtResponse jwtResponse = new JwtResponse(
                     jwt,

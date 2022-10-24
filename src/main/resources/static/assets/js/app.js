@@ -1,8 +1,9 @@
 class App {
 
-    static DOMAIN_API = "http://localhost:8089";
+    static DOMAIN_API = "http://localhost:9092";
 
     static BASE_URL_CUSTOMER = this.DOMAIN_API + "/api/customers";
+    static BASE_URL_AUTH = this.DOMAIN_API + "/api/auth"
 
     static AlertMessageEn = class {
         static SUCCESS_CREATED = "Successful data generation !";
@@ -73,6 +74,26 @@ class App {
                 confirmButtonText: 'Yes, please suspend this client !',
                 cancelButtonText: 'Cancel',
             })
+        }
+    }
+
+    static IziToast = class {
+        static showSuccessAlert(m) {
+            iziToast.success({
+                title: 'OK',
+                position: 'topRight',
+                timeout: 2500,
+                message: m
+            });
+        }
+
+        static showErrorAlert(m) {
+            iziToast.error({
+                title: 'Error',
+                position: 'topRight',
+                timeout: 2500,
+                message: m
+            });
         }
     }
 

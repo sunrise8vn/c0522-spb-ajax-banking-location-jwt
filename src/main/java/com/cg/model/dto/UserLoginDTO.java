@@ -1,9 +1,12 @@
 package com.cg.model.dto;
 
 import com.cg.model.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
-import javax.validation.Valid;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -14,7 +17,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class UserDTO {
+public class UserLoginDTO {
 
     private Long id;
 
@@ -27,10 +30,7 @@ public class UserDTO {
     @Size(max = 30, message = "Maximum password length 30 characters")
     private String password;
 
-    @Valid
-    private RoleDTO role;
-
-    public UserDTO(Long id, String username) {
+    public UserLoginDTO(Long id, String username) {
         this.id = id;
         this.username = username;
     }
@@ -39,8 +39,6 @@ public class UserDTO {
         return new User()
                 .setId(id)
                 .setUsername(username)
-                .setPassword(password)
-                .setRole(role.toRole());
+                .setPassword(password);
     }
-
 }
