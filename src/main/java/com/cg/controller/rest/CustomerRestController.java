@@ -2,19 +2,18 @@ package com.cg.controller.rest;
 
 
 import com.cg.exception.DataInputException;
-import com.cg.model.Customer;
-import com.cg.model.Deposit;
-import com.cg.model.Transfer;
-import com.cg.model.Withdraw;
+import com.cg.model.*;
 import com.cg.model.dto.*;
 import com.cg.service.customer.ICustomerService;
 import com.cg.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -77,15 +76,25 @@ public class CustomerRestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CustomerCreateDTO> create(@RequestBody CustomerCreateDTO customerDTO) {
+    public ResponseEntity<CustomerCreateDTO> create(@ModelAttribute CustomerAvatarCreateDTO customerAvatarCreateDTO) {
 
-        customerDTO.setId(0L);
-        Customer customer = customerDTO.toCustomer();
+        LocationRegion locationRegion = new LocationRegion();
+        locationRegion.setId(0L);
+        locationRegion.setProvinceId(customerAvatarCreateDTO.getProvinceId());
+        locationRegion.setProvinceName(customerAvatarCreateDTO.getProvinceName());
+        locationRegion.setDistrictId(customerAvatarCreateDTO.getDistrictId());
+        locationRegion.setDistrictName(customerAvatarCreateDTO.getDistrictName());
+        locationRegion.setWardId(customerAvatarCreateDTO.getWardId());
+        locationRegion.setWardName(customerAvatarCreateDTO.getWardName());
+        locationRegion.setAddress(customerAvatarCreateDTO.getAddress());
 
-        Customer newCustomer = customerService.save(customer);
+        customerAvatarCreateDTO.setId(0L);
+        Customer customer = customerAvatarCreateDTO.toCustomer(locationRegion);
 
-        customerDTO.setId(newCustomer.getId());
-        customerDTO.setBalance("0");
+        Customer newCustomer = customerService.saveWithAvatar(customer, customerAvatarCreateDTO.getFile());
+
+        customerAvatarCreateDTO.setId(newCustomer.getId());
+        customerAvatarCreateDTO.setBalance("0");
 
         return new ResponseEntity<>(newCustomer.toCustomerCreateDTO(), HttpStatus.CREATED);
     }
@@ -201,6 +210,7 @@ public class CustomerRestController {
     }
 
     @DeleteMapping("/delete/{customerId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<CustomerDTO> delete(@PathVariable long customerId) {
 
         Optional<Customer> customerOptional = customerService.findById(customerId);

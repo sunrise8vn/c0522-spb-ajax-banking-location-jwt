@@ -1,23 +1,31 @@
 package com.cg.service.customer;
 
 
+import com.cg.exception.DataInputException;
 import com.cg.model.*;
 import com.cg.model.dto.CustomerDTO;
 import com.cg.model.dto.ICustomerDTO;
 import com.cg.model.dto.RecipientDTO;
+import com.cg.model.enums.FileType;
 import com.cg.repository.*;
+import com.cg.service.upload.UploadService;
+import com.cg.util.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
 @Service
 @Transactional
 public class CustomerServiceImpl implements ICustomerService {
+
 
     @Autowired
     private LocationRegionRepository locationRegionRepository;
@@ -33,6 +41,15 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Autowired
     private TransferRepository transferRepository;
+
+    @Autowired
+    private AvatarRepository avatarRepository;
+
+    @Autowired
+    private UploadService uploadService;
+
+    @Autowired
+    private UploadUtil uploadUtil;
 
     @Override
     public List<Customer> findAllByDeletedIsFalse() {
@@ -155,6 +172,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public Customer save(Customer customer) {
+        return null;
+    }
+
+    @Override
+    public Customer saveWithAvatar(Customer customer, MultipartFile avatarFile) {
 
         LocationRegion locationRegion = customer.getLocationRegion();
         locationRegion.setId(0L);
@@ -162,7 +184,45 @@ public class CustomerServiceImpl implements ICustomerService {
 
         customer.setLocationRegion(newLocationRegion);
 
-        return customerRepository.save(customer);
+        Customer newCustomer = customerRepository.save(customer);
+
+        Avatar avatar = new Avatar();
+
+        String fileType = avatarFile.getContentType();
+
+        assert fileType != null;
+
+        fileType = fileType.substring(0, 5);
+
+        avatar.setFileType(fileType);
+        avatar.setCustomer(newCustomer);
+
+        Avatar newAvatar = avatarRepository.save(avatar);
+
+        if (fileType.equals(FileType.IMAGE.getValue())) {
+            uploadAndSaveProductImage(avatarFile, newCustomer, newAvatar);
+        }
+
+        return newCustomer;
+    }
+
+    private void uploadAndSaveProductImage(MultipartFile avatarFile, Customer customer, Avatar avatar) {
+        try {
+            Map uploadResult = uploadService.uploadImage(avatarFile, uploadUtil.buildImageUploadParams(avatar));
+            String fileUrl = (String) uploadResult.get("secure_url");
+            String fileFormat = (String) uploadResult.get("format");
+
+            avatar.setFileName(avatar.getId() + "." + fileFormat);
+            avatar.setFileUrl(fileUrl);
+            avatar.setFileFolder(UploadUtil.IMAGE_UPLOAD_FOLDER);
+            avatar.setCloudId(avatar.getFileFolder() + "/" + avatar.getId());
+            avatar.setCustomer(customer);
+            avatarRepository.save(avatar);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataInputException("Upload hình ảnh thất bại");
+        }
     }
 
     @Override

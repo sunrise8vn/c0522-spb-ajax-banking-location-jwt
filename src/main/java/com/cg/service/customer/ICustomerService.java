@@ -9,6 +9,7 @@ import com.cg.model.dto.ICustomerDTO;
 import com.cg.model.dto.RecipientDTO;
 import com.cg.service.IGeneralService;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface ICustomerService extends IGeneralService<Customer> {
     List<Customer> getAllByIdNot(long senderId);
 
     List<RecipientDTO> getAllRecipientDTO(long senderId);
+
+    Customer saveWithAvatar(Customer customer, MultipartFile avatarFile);
 
     Customer deposit(Customer customer, Deposit deposit);
 

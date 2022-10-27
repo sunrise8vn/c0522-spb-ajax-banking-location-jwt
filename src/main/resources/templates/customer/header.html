@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="header">
+    <header>
+        <div class="row">
+            <div class="col-sm-5">
+                <h1>List of customers</h1>
+            </div>
+            <div class="col-sm-7">
+                <a href="/logout">
+                    <button type="button" class="btn btn-outline-light">
+                        <th:block th:text="${username}"/>
+                    </button>
+                </a>
+
+                <button id="btnShowCreateModal" class="btn btn-outline-light">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Customer</span>
+                </button>
+                <a href="/transfers" class="btn btn-outline-light">
+                    <i class="fas fa-history"></i>
+                    <span>Transfer money Information</span>
+                </a>
+            </div>
+        </div>
+    </header>
+</th:block>

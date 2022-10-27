@@ -5,6 +5,8 @@ class App {
     static BASE_URL_CUSTOMER = this.DOMAIN_API + "/api/customers";
     static BASE_URL_AUTH = this.DOMAIN_API + "/api/auth"
 
+    static BASE_URL_PROVINCE = "https://vapi.vnappmob.com/api/province/"
+
     static AlertMessageEn = class {
         static SUCCESS_CREATED = "Successful data generation !";
         static SUCCESS_UPDATED = "Data update successful !";
@@ -123,6 +125,10 @@ class App {
             <button class="btn btn-secondary update">
                 <i class="fas fa-pencil-alt"></i>
                 Update
+            </button>
+            <button class="btn btn-danger delete">
+                <i class="fas fa-trash-alt"></i>
+                Delete
             </button>
         `;
 

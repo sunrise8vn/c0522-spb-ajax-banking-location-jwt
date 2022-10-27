@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="modalDeposit">
+    <div class="modal fade" id="modalDeposit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal deposit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmDeposit" method="post">
+                        <div class="row col-lg-12 mt-3">
+                            <div class="col-lg-6">
+                                <label>Customer ID</label>
+                                <input type="text" id="customerIdDep" name="customerIdDep" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Full Name</label>
+                                <input type="text" id="fullNameDep" name="fullNameDep" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 mt-3">
+                            <div class="col-lg-6">
+                                <label>Current balance ($)</label>
+                                <input type="text" id="balanceDep" name="balanceDep" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Transaction Amount ($)</label>
+                                <input type="text" id="transactionAmountDep" name="transactionAmountDep"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnDeposit" class="btn btn-outline-success">
+                        <i class="fas fa-plus"></i>
+                        Deposit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

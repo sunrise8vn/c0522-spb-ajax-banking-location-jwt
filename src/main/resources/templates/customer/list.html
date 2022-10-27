@@ -4,33 +4,17 @@
 <head>
     <title>List of customers</title>
     <th:block th:replace="layout/head"/>
+    <link rel="stylesheet" href="/assets/css/upload.css">
+    <style>
+        .fl {
+            float: left;
+        }
+    </style>
 </head>
 
 <body>
 <div class="main-container">
-    <header>
-        <div class="row">
-            <div class="col-sm-5">
-                <h1>List of customers</h1>
-            </div>
-            <div class="col-sm-7">
-                <a href="/logout">
-                    <button type="button" class="btn btn-outline-light">
-                        <th:block th:text="${username}"/>
-                    </button>
-                </a>
-
-                <button id="btnShowCreateModal" class="btn btn-outline-light">
-                    <i class="fas fa-plus"></i>
-                    <span>Add New Customer</span>
-                </button>
-                <a href="/transfers" class="btn btn-outline-light">
-                    <i class="fas fa-history"></i>
-                    <span>Transfer money Information</span>
-                </a>
-            </div>
-        </div>
-    </header>
+    <th:block th:replace="/customer/header :: header" />
 
     <div class="content">
         <input type="hidden" id="currentRow">
@@ -58,280 +42,24 @@
 <div id="footer" class="footer">
 </div>
 
-<div class="modal fade" id="modalCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Modal create</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="frmCreate" method="post">
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-4">
-                            <label>Full Name</label>
-                            <input type="text" id="fullNameCre" name="fullNameCre" class="form-control">
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Email</label>
-                            <input type="email" id="emailCre" name="emailCre" class="form-control">
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Phone</label>
-                            <input type="tel" id="phoneCre" name="phoneCre" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-3">
-                            <label>Province</label>
-                            <select name="provinceIdCre" id="provinceIdCre" class="form-control">
+<th:block th:replace="/customer/modalCreate :: modalCreate" />
 
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>District</label>
-                            <select name="districtIdCre" id="districtIdCre" class="form-control">
+<th:block th:replace="/customer/modalUpdate :: modalUpdate" />
 
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Ward</label>
-                            <select name="warIdCre" id="wardIdCre" class="form-control">
+<th:block th:replace="/customer/modalDeposit :: modalDeposit" />
 
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Address</label>
-                            <input type="text" id="addressCre" name="addressCre" class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="btnCreate" class="btn btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Create
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<th:block th:replace="/customer/modalWithdraw :: modalWithdraw" />
 
-<div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Modal Update</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="frmUpdate" method="post">
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-4">
-                            <label>Full Name</label>
-                            <input type="text" id="fullNameUp" name="fullNameUp" class="form-control">
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Email</label>
-                            <input type="email" id="emailUp" name="emailUp" class="form-control">
-                        </div>
-                        <div class="col-lg-4">
-                            <label>Phone</label>
-                            <input type="tel" id="phoneUp" name="phoneUp" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-3">
-                            <label>Province</label>
-                            <select name="provinceIdUp" id="provinceIdUp" class="form-control">
-
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>District</label>
-                            <select name="districtIdUp" id="districtIdUp" class="form-control">
-
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Ward</label>
-                            <select name="warIdUp" id="wardIdUp" class="form-control">
-
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Address</label>
-                            <input type="text" id="addressUp" name="addressUp" class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="btnUpdate" class="btn btn-outline-secondary">
-                    <i class="fas fa-pencil-alt"></i>
-                    Update
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalDeposit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Modal deposit</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="frmDeposit" method="post">
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-6">
-                            <label>Customer ID</label>
-                            <input type="text" id="customerIdDep" name="customerIdDep" class="form-control">
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Full Name</label>
-                            <input type="text" id="fullNameDep" name="fullNameDep" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-6">
-                            <label>Current balance ($)</label>
-                            <input type="text" id="balanceDep" name="balanceDep" class="form-control">
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Transaction Amount ($)</label>
-                            <input type="text" id="transactionAmountDep" name="transactionAmountDep"
-                                   class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="btnDeposit" class="btn btn-outline-success">
-                    <i class="fas fa-plus"></i>
-                    Deposit
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalWithdraw" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Modal withdraw</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-alert-danger hide">
-                </div>
-                <form id="frmWithdraw" method="post">
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-6">
-                            <label>Customer ID</label>
-                            <input type="text" id="customerIdWd" name="customerIdWd" class="form-control">
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Full Name</label>
-                            <input type="text" id="fullNameWd" name="fullNameWd" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-6">
-                            <label>Current balance ($)</label>
-                            <input type="text" id="balanceWd" name="balanceWd" class="form-control">
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Transaction Amount ($)</label>
-                            <input type="text" id="transactionAmountWd" name="transactionAmountWd"
-                                   class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="btnWithdraw" class="btn btn-outline-warning">
-                    <i class="fas fa-minus"></i>
-                    Withdraw
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalTransfer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Modal Transfer</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-alert-danger hide">
-                </div>
-                <form id="frmTransfer" method="post">
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-3">
-                            <label>Sender ID</label>
-                            <input type="text" id="senderIdTrf" name="senderIdTrf" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Full Name</label>
-                            <input type="text" id="fullNameTrf" name="fullNameTrf" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Email</label>
-                            <input type="email" id="emailTrf" name="emailTrf" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Balance</label>
-                            <input type="text" id="balanceTrf" name="balanceTrf" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row col-lg-12 mt-3">
-                        <div class="col-lg-3">
-                            <label>Recipient Name</label>
-                            <select id="recipientIdTrf" name="recipientIdTrf" class="form-control">
-                            </select>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Transfer Amount ($)</label>
-                            <input type="text" id="transferAmountTrf" name="transferAmountTrf" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Fees (%)</label>
-                            <input type="text" name="feesTrf" value="10" class="form-control" readonly>
-                        </div>
-                        <div class="col-lg-3">
-                            <label>Transaction Amount ($)</label>
-                            <input type="text" id="transactionAmountTrf" name="transactionAmountTrf" class="form-control" readonly>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="btnTransfer" class="btn btn-outline-primary">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Transfer</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<th:block th:replace="/customer/modalTransfer :: modalTransfer" />
 
 <th:block th:replace="layout/script" />
 
 <script>
     let page = {
         urls: {
+            getAllProvinces: App.BASE_URL_PROVINCE,
+            getAllDistrictsByProvinceId: App.BASE_URL_PROVINCE + "district/",
+            getAllWardsByDistrictId: App.BASE_URL_PROVINCE + "ward/",
             getAllCustomers: App.BASE_URL_CUSTOMER,
             getCustomerById: App.BASE_URL_CUSTOMER,
             getAllRecipients: App.BASE_URL_CUSTOMER + "/get-all-recipients-without-sender/",
@@ -359,6 +87,18 @@
     let deposit = new Deposit();
     let withdraw = new Withdraw();
     let transfer = new Transfer();
+
+    page.dialogs.elements.wrapper = $("section .wrapper");
+    page.dialogs.elements.productName = $("#productName");
+    page.dialogs.elements.description = $("#description");
+    page.dialogs.elements.imageFile = $("#imageFile");
+    page.dialogs.elements.wrapperContent = $("section .wrapper .content");
+    page.dialogs.elements.imagePreview = $("section .image-preview canvas");
+    page.dialogs.elements.canvas = $("#canvas");
+    page.dialogs.elements.context = page.dialogs.elements.canvas[0].getContext('2d');
+    page.dialogs.elements.imagePreview.css("display", "none");
+    page.dialogs.elements.divImagePreview = $("div.image-preview, div.file-name");
+    page.dialogs.elements.btnClearImagePreview = $(".clear-image-preview i");
 
 
     page.elements.footer = $("#footer");
@@ -457,6 +197,7 @@
                 results.map(item => {
                     let str = `<option value="${item.province_id}">${item.province_name}</option>`;
                     page.dialogs.elements.provinceCre.append(str);
+                    page.dialogs.elements.provinceUp.append(str);
                 })
 
             })
@@ -472,17 +213,19 @@
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "https://vapi.vnappmob.com/api/province/district/" + provinceId
+            url: page.urls.getAllDistrictsByProvinceId + provinceId
         })
             .done((data) => {
 
                 page.dialogs.elements.districtCre.empty();
+                page.dialogs.elements.districtUp.empty();
 
                 let results = data.results;
 
                 results.map(item => {
                     let str = `<option value="${item.district_id}">${item.district_name}</option>`;
                     page.dialogs.elements.districtCre.append(str);
+                    page.dialogs.elements.districtUp.append(str);
                 })
             })
             .fail((xqXHR) => {
@@ -491,22 +234,24 @@
     }
 
     page.commands.getAllWardsByDistrictId = (districtId) => {
-        $.ajax({
+        return $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "https://vapi.vnappmob.com/api/province/ward/" + districtId
+            url: page.urls.getAllWardsByDistrictId + districtId
         })
             .done((data) => {
                 page.dialogs.elements.wardCre.empty();
+                page.dialogs.elements.wardUp.empty();
 
                 let results = data.results;
 
                 results.map(item => {
                     let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
                     page.dialogs.elements.wardCre.append(str);
+                    page.dialogs.elements.wardUp.append(str);
                 })
             })
             .fail((xqXHR) => {
@@ -525,6 +270,7 @@
         })
             .done((data) => {
                 customer = data;
+                locationRegion = customer.locationRegion;
             })
             .fail((jqXHR) => {
                 console.log("jqXHR ======");
@@ -576,6 +322,56 @@
         page.dialogs.elements.frmTransfer.trigger("submit");
     })
 
+    page.dialogs.commands.provinceChange = () => {
+        // page.elements.loader.removeClass("hide");
+
+        return $.ajax({
+            type: "GET",
+            url: page.urls.getAllDistrictsByProvinceId + locationRegion.provinceId
+        }).done((data) => {
+            page.dialogs.elements.districtCre.empty();
+            page.dialogs.elements.districtUp.empty();
+
+            let results = data.results;
+
+            results.map(item => {
+                let str = `<option value="${item.district_id}">${item.district_name}</option>`;
+                page.dialogs.elements.districtCre.append(str);
+                page.dialogs.elements.districtUp.append(str);
+            })
+
+        }).fail(function () {
+            App.SweetAlert.showErrorAlert(App.AlertMessageEn.ERROR_LOADING_DISTRICT);
+        }).always(function () {
+            page.elements.loader.addClass("hide");
+        });
+    }
+
+    page.dialogs.commands.districtChange = () => {
+        // page.elements.loader.removeClass("hide");
+
+        $.ajax({
+            type: "GET",
+            url: page.urls.getAllWardsByDistrictId + locationRegion.districtId
+        }).done((data) => {
+            page.dialogs.elements.wardCre.empty();
+            page.dialogs.elements.wardUp.empty();
+
+            let results = data.results;
+
+            results.map(item => {
+                let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
+                page.dialogs.elements.wardCre.append(str);
+                page.dialogs.elements.wardUp.append(str);
+            })
+
+        }).fail(function () {
+            App.SweetAlert.showErrorAlert(App.AlertMessageEn.ERROR_LOADING_WARD);
+        }).always(function () {
+            page.elements.loader.addClass("hide");
+        });
+    }
+
     page.dialogs.elements.provinceCre.on("change", function () {
         let provinceId = $(this).val();
 
@@ -586,16 +382,71 @@
         });
     });
 
+    page.dialogs.elements.provinceUp.on("change", function () {
+        locationRegion.provinceId = page.dialogs.elements.provinceUp.val();
+
+        page.dialogs.commands.provinceChange().then(() => {
+            locationRegion.districtId = page.dialogs.elements.districtUp.val();
+
+            page.dialogs.elements.districtUp.prop("selectedIndex", 0).val();
+
+            page.dialogs.commands.districtChange().then(() => {
+                page.dialogs.elements.wardUp.prop("selectedIndex", 0).val();
+            });
+        });
+    });
+
     page.dialogs.elements.districtCre.on("change", function () {
         let districtId = $(this).val();
 
         page.commands.getAllWardsByDistrictId(districtId);
     })
 
+    page.dialogs.elements.districtUp.on("change", function () {
+        locationRegion.districtId = $(this).val();
+
+        page.dialogs.commands.districtChange().then(() => {
+            page.dialogs.elements.wardUp.prop("selectedIndex", 0).val();
+        });
+    })
+
+
+    page.dialogs.commands.assignDataModalUpdate = () => {
+        page.dialogs.elements.fullNameUp.val(customer.fullName);
+        page.dialogs.elements.emailUp.val(customer.email);
+        page.dialogs.elements.phoneUp.val(customer.phone);
+
+        page.dialogs.elements.provinceUp.val(locationRegion.provinceId);
+
+        page.dialogs.elements.districtUp.empty();
+
+        page.commands.getAllDistrictsByProvinceId(locationRegion.provinceId).then(function () {
+            page.dialogs.elements.districtUp.val(locationRegion.districtId);
+
+            page.dialogs.elements.wardUp.empty();
+
+            page.commands.getAllWardsByDistrictId(locationRegion.districtId).then(function () {
+                page.dialogs.elements.wardUp.val(locationRegion.wardId);
+            });
+        });
+
+        page.dialogs.elements.addressUp.val(locationRegion.address);
+
+    }
+
 
     page.commands.handleOpenModalUpdate = () => {
         page.elements.footer.find(".update").on("click", () => {
-            page.elements.modalUpdate.modal("show");
+
+            let customerId = page.elements.currentRow.val();
+
+            page.commands.getCustomerById(customerId).then(() => {
+                page.dialogs.commands.assignDataModalUpdate();
+                page.elements.modalUpdate.modal("show");
+            })
+            .catch(() => {
+                App.IziToast.showErrorAlert("Customer ID not valid");
+            })
         });
     }
 
@@ -651,6 +502,50 @@
                     App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
                 });
         });
+    }
+
+    page.commands.handleOpenConfirmDelete = () => {
+        page.elements.footer.find(".delete").on("click", () => {
+
+            let customerId = page.elements.currentRow.val();
+
+            App.SweetAlert.showSuspendedConfirmDialog()
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        page.dialogs.commands.deactivateCustomer(customerId);
+                    }
+                });
+        });
+    }
+
+    page.dialogs.commands.deactivateCustomer = (customerId) => {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "DELETE",
+            url: page.urls.delete + customerId
+        })
+            .done(() => {
+                App.SweetAlert.showAlertSuccess(App.AlertMessageVi.SUCCESS_DEACTIVATE);
+                $("#tr_" + customerId).remove();
+            })
+            .fail((jqXHR) => {
+                console.log("jqXHR deactivateCustomer ======");
+                console.log(jqXHR);
+
+                if (jqXHR.status === 401) {
+                    App.IziToast.showErrorAlert(App.AlertMessageVi.ERROR_401);
+                }
+
+                if (jqXHR.status === 403) {
+                    App.IziToast.showErrorAlert(App.AlertMessageVi.ERROR_403);
+                }
+                else {
+                    App.IziToast.showErrorAlert("Xóa thất bại");
+                }
+            });
     }
 
     page.commands.handleCloseModalWithdraw = () => {
@@ -745,6 +640,59 @@
             .fail((jqXHR) => {
                 App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_400);
             })
+    }
+
+
+    page.commands.createCustomerWithAvatar = () => {
+        locationRegion.id = 0;
+        locationRegion.provinceId = page.dialogs.elements.provinceCre.val();
+        locationRegion.provinceName = page.dialogs.elements.provinceCre.find("option:selected").text();
+        locationRegion.districtId = page.dialogs.elements.districtCre.val();
+        locationRegion.districtName = page.dialogs.elements.districtCre.find("option:selected").text();
+        locationRegion.wardId = page.dialogs.elements.wardCre.val();
+        locationRegion.wardName = page.dialogs.elements.wardCre.find("option:selected").text();
+        locationRegion.address = page.dialogs.elements.addressCre.val();
+
+        let formData = new FormData();
+        formData.append("fullName", page.dialogs.elements.fullNameCre.val().toString());
+        formData.append("email", page.dialogs.elements.emailCre.val().toString());
+        formData.append("phone", page.dialogs.elements.phoneCre.val().toString());
+        formData.append("file", page.dialogs.elements.imageFile[0].files[0]);
+
+        formData.append("provinceId", page.dialogs.elements.provinceCre.val().toString());
+        formData.append("provinceName", page.dialogs.elements.provinceCre.find("option:selected").text());
+        formData.append("districtId", page.dialogs.elements.districtCre.val().toString());
+        formData.append("districtName", page.dialogs.elements.districtCre.find("option:selected").text());
+        formData.append("wardId", page.dialogs.elements.wardCre.val().toString());
+        formData.append("wardName", page.dialogs.elements.wardCre.find("option:selected").text());
+        formData.append("address", page.dialogs.elements.addressCre.val().toString());
+
+        $.ajax({
+            type: "POST",
+            contentType: false,
+            cache: false,
+            processData: false,
+            url: page.urls.createCustomer,
+            data: formData
+        }).done((data) => {
+            console.log(data)
+            // product = data;
+            //
+            // page.commands.addRow();
+            //
+            App.IziToast.showSuccessAlert(App.AlertMessageVi.SUCCESS_CREATED);
+            //
+            // page.dialogs.elements.modalCreateProduct.modal('hide');
+            //
+            // page.commands.handleImagePopup();
+
+        }).fail((err) => {
+            console.log(err)
+            App.IziToast.showErrorAlert(App.AlertMessageVi.ERROR_400);
+        }).always(function () {
+            // page.element.loader.addClass("hide");
+            // page.element.btnSave.prop('disabled', false);
+        });
     }
 
     function doDeposit() {
@@ -905,7 +853,8 @@
             }
         },
         submitHandler: function () {
-            page.commands.createCustomer();
+            // page.commands.createCustomer();
+            page.commands.createCustomerWithAvatar();
         }
     })
 
@@ -1017,7 +966,43 @@
             page.elements.footer.append(App.renderFooterButton());
 
             page.commands.handleOpenModalUpdate();
+
+            page.commands.handleOpenConfirmDelete();
         })
+    }
+
+    page.dialogs.commands.loadImageToCanvas = (imageFile) => {
+        page.dialogs.elements.imagePreview.css("display", "");
+        page.dialogs.elements.wrapper.addClass("active");
+        page.dialogs.elements.wrapperContent.css("opacity", 0);
+
+        let imageObj = new Image();
+
+        imageObj.onload = function () {
+            page.dialogs.elements.context.canvas.width = imageObj.width;
+            page.dialogs.elements.context.canvas.height = imageObj.height;
+            page.dialogs.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+        };
+
+        imageObj.src = URL.createObjectURL(imageFile)
+    }
+
+    page.dialogs.commands.changeImagePreview = () => {
+        let imageFile = page.dialogs.elements.imageFile[0].files[0];
+
+        if (imageFile) {
+            let reader = new FileReader();
+
+            reader.readAsDataURL(imageFile);
+
+            reader.onload = function(e){
+                if (e.target.readyState === FileReader.DONE) {
+                    page.dialogs.commands.loadImageToCanvas(imageFile);
+                }
+            }
+        } else {
+            page.dialogs.elements.clearImagePreview();
+        }
     }
 
     page.initializeEventControl = () => {
@@ -1028,6 +1013,13 @@
 
         page.commands.handleChangeTransferAmountTrf();
 
+        page.dialogs.elements.divImagePreview.on("click", function () {
+            page.dialogs.elements.imageFile.trigger("click");
+        });
+
+        page.dialogs.elements.imageFile.on("change", function () {
+            page.dialogs.commands.changeImagePreview();
+        });
     }
 
     page.loadData = () => {
